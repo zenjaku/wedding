@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import HeroSection from './components/HeroSection.vue';
-import ImageCarousel from './components/ImageCarousel.vue';
+import Home from './pages/Home.vue';
+
 </script>
 
 <template>
-  <HeroSection />
-  <ImageCarousel />
+  <Home />
 </template>
