@@ -28,6 +28,12 @@ body {
     background-color: var(--primary-color);
 }
 
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
 /* Hero Section */
 #hero {
     padding: clamp(0.75rem, 3vw, 2.25rem);
@@ -98,12 +104,11 @@ body {
 /* CAROUSEL SECTION */
 #carousel {
     padding: clamp(0.75rem, 3vw, 2.25rem);
+    min-height: 100svh;
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background:
-        radial-gradient(140% 95% at 50% -20%, #f7f7f7 0%, #dddddd 42%, #b7b7b7 70%, #a5a5a5 100%),
-        linear-gradient(180deg, #f1f1f1 0%, #c7c7c7 54%, #d9d9d9 100%);
+    background: url('./img/bg_1.jpg') center / cover no-repeat;
 }
 
 #carousel::before {
@@ -114,12 +119,7 @@ body {
     bottom: -22%;
     height: 40%;
     z-index: 0;
-    background:
-        linear-gradient(174deg,
-            rgba(255, 255, 255, 0.72) 0%,
-            rgba(255, 255, 255, 0.18) 15%,
-            rgba(255, 255, 255, 0.06) 82%,
-            rgba(255, 255, 255, 0.7) 100%);
+    background: none;
     transform: skewY(-6deg);
     pointer-events: none;
 }
@@ -129,9 +129,7 @@ body {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: radial-gradient(115% 85% at 50% 38%,
-            rgba(0, 0, 0, 0) 52%,
-            rgba(0, 0, 0, 0.3) 100%);
+    background: none;
     pointer-events: none;
 }
 
@@ -141,7 +139,7 @@ body {
     text-align: center;
     font-size: var(--header-font-size);
     font-weight: var(--header-font-weight);
-    color: var(--tertiary-color);
+    color: var(--primary-color);
     margin: 0 0 clamp(0.75rem, 2vw, 1.5rem);
 }
 
@@ -176,10 +174,38 @@ body {
     user-select: none;
 }
 
+.carousel-caption {
+    position: absolute;
+    left: clamp(0.7rem, 2vw, 1.2rem);
+    right: clamp(0.7rem, 2vw, 1.2rem);
+    bottom: clamp(0.7rem, 2vw, 1.2rem);
+    z-index: 3;
+    padding: clamp(0.6rem, 1.8vw, 1rem);
+    border-radius: clamp(0.7rem, 1.8vw, 1.1rem);
+    color: #fff;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.2));
+    backdrop-filter: blur(1px);
+}
+
+.carousel-caption h3 {
+    margin: 0;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.carousel-caption p {
+    margin: 0.35rem 0 0;
+    font-size: clamp(0.72rem, 1.8vw, 0.95rem);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .carousel-indicator {
     position: absolute;
     left: 50%;
-    bottom: clamp(0.6rem, 2.2vw, 1.15rem);
+    bottom: clamp(-1rem, 1vw, 1.15rem);
     transform: translateX(-50%);
     z-index: 4;
     display: flex;
@@ -192,7 +218,7 @@ body {
     border: 0;
     padding: 0;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     width: clamp(1.6rem, 5vw, 2.2rem);
     height: 0.3rem;
     border-radius: 15px;
@@ -204,6 +230,159 @@ body {
     background-color: #ffffff;
     opacity: 1;
     transform: scaleX(1.08);
+}
+
+.our_love_story .description {
+    background-color: var(--tertiary-color);
+    border-radius: .275em;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-top: 2em;
+    padding: 1em;
+}
+
+.images {
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    text-align: center;
+}
+
+.images>div {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-frame {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.our_love_story .title {
+    font-family: var(--secondary-font);
+    font-weight: var(--title-font-weight);
+}
+
+.our_love_story .hr_line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--tertiary-color);
+    margin-bottom: 1em;
+}
+
+.ig-btn {
+    margin-top: 1em;
+    background-color: var(--primary-color);
+    padding: .175em .725em;
+    border-radius: 5px;
+    font-weight: var(--title-font-weight);
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        box-shadow: 1px 1px 1px 1px var(--tertiary-color);
+        background-color: transparent;
+        color: var(--tertiary-color);
+    }
+}
+
+/* DIRECTION SECTION */
+#direction {
+    margin-top: 1.25em;
+    padding: 0 clamp(0.5rem, 3vw, 1.5rem) 1.5rem;
+}
+
+.direction {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(0.5rem, 2.2vw, 1rem);
+}
+
+.direction-img-container,
+.side-image-container {
+    width: 100%;
+}
+
+.direction-img-container {
+    flex: 1.5;
+    max-width: 32rem;
+    order: 2;
+    text-align: center;
+}
+
+.side-image-container.left {
+    flex: 0.75;
+    max-width: 12rem;
+    order: 1;
+}
+
+.side-image-container.right {
+    flex: 0.75;
+    max-width: 12rem;
+    order: 3;
+}
+
+.direction-img-container img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    display: block;
+    border-radius: 1.15rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    object-fit: cover;
+    object-position: center;
+}
+
+.side-image-container img {
+    width: 100%;
+    aspect-ratio: 3 / 5;
+    display: block;
+    border-radius: 1.15rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    object-fit: cover;
+    object-position: center;
+}
+
+.direction-title {
+    margin-top: 0.65rem;
+    color: #2f2f2f;
+    font-family: var(--secondary-font);
+    font-size: clamp(0.82rem, 2.1vw, 1.1rem);
+    font-weight: 600;
+}
+
+.direction-btn {
+    margin-top: 0.7rem;
+    background-color: #2f2f2f;
+    color: var(--primary-color);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-family: var(--secondary-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        box-shadow: 1px 1px 1px 1px var(--tertiary-color);
+        background-color: transparent;
+        color: #2f2f2f;
+    }
 }
 
 /* Small devices (tablets, 600px and up) */

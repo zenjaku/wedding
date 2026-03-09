@@ -1,7 +1,23 @@
 <script setup lang="ts">
-import { DEFAULT_IMAGES } from '@/props/DefaultValues';
+import { DEFAULT_IMAGES, DEFAULT_LOVESTORY } from '@/props/DefaultValues';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
+// story
+const story = DEFAULT_LOVESTORY[0];
+
+function extractInstagramUsername(link: string): string {
+    try {
+        const pathname = new URL(link).pathname
+        return pathname.split('/').filter(Boolean)[0] ?? ''
+    } catch {
+        return ''
+    }
+}
+
+const igGroomUsername = ref(extractInstagramUsername(story.groom_ig))
+const igBrideUsername = ref(extractInstagramUsername(story.bride_ig))
+
+// images
 const slides = DEFAULT_IMAGES;
 const totalSlides = slides.length
 const currentIndex = ref(Math.floor(totalSlides / 2))
@@ -94,11 +110,50 @@ onBeforeUnmount(stopAutoplay)
             <div v-for="(slide, index) in slides" :key="slide.image_url" class="carousel-img-container"
                 :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
                 <img :src="slide.image_url" :alt="slide.title">
+                <div v-if="index === currentIndex" class="carousel-caption">
+                    <h3>{{ slide.title }}</h3>
+                    <p>{{ slide.description }}</p>
+                </div>
             </div>
             <div class="carousel-indicator">
                 <button v-for="(slide, index) in slides" :key="`${slide.image_url}-indicator`" type="button"
                     :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
                     @click="goToSlide(index)" />
+            </div>
+        </div>
+        <div class="our_love_story">
+            <p class="description">{{ story.description }}</p>
+            <div class="images">
+                <div>
+                    <span class="title">Groom</span>
+                    <div class="hr_line"></div>
+                    <div class="img-frame">
+                        <img :src="story.groom_image" alt="">
+                    </div>
+                    <div>
+                        <a :href="story.groom_ig">
+                            <button class="ig-btn">
+                                <font-awesome-icon :icon="['fab', 'instagram']" />
+                                {{ igGroomUsername }}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <span class="title">Bride</span>
+                    <div class="hr_line"></div>
+                    <div class="img-frame">
+                        <img :src="story.bride_image" alt="">
+                    </div>
+                    <div>
+                        <a :href="story.groom_ig">
+                            <button class="ig-btn">
+                                <font-awesome-icon :icon="['fab', 'instagram']" />
+                                {{ igBrideUsername }}
+                            </button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

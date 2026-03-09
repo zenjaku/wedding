@@ -10,5 +10,23 @@ export type HeroDetails = {
 export type ImageCarousel = {
   id: number
   title: string
+  description: string
+  image_url: string
+}
+
+export type LoveStory = {
+  id: number
+  title: string
+  description: string
+  groom_ig: string
+  bride_ig: string
+  groom_image: string
+  bride_image: string
+}
+
+export type Direction = {
+  id: number
+  title: string
+  google_map: string
   image_url: string
 }

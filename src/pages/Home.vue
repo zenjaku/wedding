@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import Direction from '@/components/Direction.vue';
 import HeroSection from '@/components/HeroSection.vue';
-import ImageCarousel from '@/components/ImageCarousel.vue';
+import OurLoveStory from '@/components/OurLoveStory.vue';
 </script>
 
 <template>
     <HeroSection />
-    <ImageCarousel />
+    <OurLoveStory />
+    <Direction />
 </template>
