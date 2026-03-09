@@ -109,7 +109,7 @@ onBeforeUnmount(stopAutoplay)
         <div class="carousel-container" @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
             <div v-for="(slide, index) in slides" :key="slide.image_url" class="carousel-img-container"
                 :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
-                <img :src="slide.image_url" :alt="slide.title">
+                <img :src="slide.image_url" :alt="slide.title" loading="lazy" decoding="async">
                 <div v-if="index === currentIndex" class="carousel-caption">
                     <h3>{{ slide.title }}</h3>
                     <p>{{ slide.description }}</p>
@@ -128,7 +128,7 @@ onBeforeUnmount(stopAutoplay)
                     <span class="title">Groom</span>
                     <div class="hr_line"></div>
                     <div class="img-frame">
-                        <img :src="story.groom_image" alt="">
+                        <img :src="story.groom_image" alt="Groom image" loading="lazy" decoding="async">
                     </div>
                     <div>
                         <a :href="story.groom_ig">
@@ -143,10 +143,10 @@ onBeforeUnmount(stopAutoplay)
                     <span class="title">Bride</span>
                     <div class="hr_line"></div>
                     <div class="img-frame">
-                        <img :src="story.bride_image" alt="">
+                        <img :src="story.bride_image" alt="Bride image" loading="lazy" decoding="async">
                     </div>
                     <div>
-                        <a :href="story.groom_ig">
+                        <a :href="story.bride_ig">
                             <button class="ig-btn">
                                 <font-awesome-icon :icon="['fab', 'instagram']" />
                                 {{ igBrideUsername }}

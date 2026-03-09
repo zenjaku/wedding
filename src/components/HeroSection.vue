@@ -25,7 +25,7 @@ const formattedWeddingDate = new Intl.DateTimeFormat('en-US', {
                 </div>
             </div>
             <div class="img-container">
-                <img :src="hero.image_url" :alt="hero.header" class="image-fluid" />
+                <img :src="hero.image_url" :alt="hero.header" class="image-fluid" fetchpriority="high" decoding="async" />
             </div>
         </div>
     </section>
