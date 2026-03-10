@@ -4,6 +4,7 @@ import OurLoveStorySection from '@/pages/sections/OurLoveStorySection.vue';
 import WeddingDetailsSection from './sections/WeddingDetailsSection.vue';
 import CountdownSection from './sections/CountdownSection.vue';
 import RSVPSection from './sections/RSVPSection.vue';
+import FooterSection from './sections/FooterSection.vue';
 </script>
 
 <template>
@@ -13,4 +14,5 @@ import RSVPSection from './sections/RSVPSection.vue';
     <WeddingDetailsSection />
     <CountdownSection />
     <RSVPSection />
+    <FooterSection />
 </template>
