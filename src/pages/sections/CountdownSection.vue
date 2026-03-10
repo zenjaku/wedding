@@ -1,18 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { DEFAULT_VALUES } from '@/props/DefaultValues';
+import { DEFAULT_WEDDING } from '@/props/DefaultValues';
 
-const getDate = DEFAULT_VALUES[0];
-const targetDate = getDate.wedding_date;
-
-const date = new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-    hour: 'numeric',
-    minute: '2-digit'
-}).format(targetDate)
+const targetDate = DEFAULT_WEDDING.starts_at;
 
 const now = ref(Date.now());
 let countdownInterval: ReturnType<typeof setInterval> | null = null;

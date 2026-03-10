@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { DEFAULT_IMAGES, DEFAULT_LOVESTORY } from '@/props/DefaultValues';
+import { DEFAULT_CAROUSEL_SLIDES, DEFAULT_LOVESTORY, DEFAULT_MEDIA_ASSETS, DEFAULT_PEOPLE } from '@/props/DefaultValues';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 // story
 const story = DEFAULT_LOVESTORY[0];
+const groom = DEFAULT_PEOPLE.find((p) => p.id === story.groom_person_id);
+const bride = DEFAULT_PEOPLE.find((p) => p.id === story.bride_person_id);
+
+function getMediaUrl(mediaId: number) {
+    return DEFAULT_MEDIA_ASSETS.find((m) => m.id === mediaId)?.url ?? '';
+}
 
 function extractInstagramUsername(link: string): string {
     try {
@@ -14,11 +20,11 @@ function extractInstagramUsername(link: string): string {
     }
 }
 
-const igGroomUsername = ref(extractInstagramUsername(story.groom_ig))
-const igBrideUsername = ref(extractInstagramUsername(story.bride_ig))
+const igGroomUsername = ref(extractInstagramUsername(groom?.instagram_url ?? ''))
+const igBrideUsername = ref(extractInstagramUsername(bride?.instagram_url ?? ''))
 
 // images
-const slides = DEFAULT_IMAGES;
+const slides = DEFAULT_CAROUSEL_SLIDES;
 const totalSlides = slides.length
 const currentIndex = ref(Math.floor(totalSlides / 2))
 const touchStartX = ref<number | null>(null)
@@ -106,22 +112,21 @@ onBeforeUnmount(stopAutoplay)
 <template>
     <section id="carousel">
         <div class="carousel-background">
-            <img src="https://images.pexels.com/photos/230290/pexels-photo-230290.jpeg" alt=""
-                class="carousel-background-image" loading="lazy" decoding="async">
+            <img :src="getMediaUrl(8)" alt="" class="carousel-background-image" loading="lazy" decoding="async">
         </div>
         <div class="carousel-content">
             <h2>Our Love Story</h2>
             <div class="carousel-container" @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
-                <div v-for="(slide, index) in slides" :key="slide.image_url" class="carousel-img-container"
+                <div v-for="(slide, index) in slides" :key="slide.id" class="carousel-img-container"
                     :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
-                    <img :src="slide.image_url" :alt="slide.title" loading="lazy" decoding="async">
+                    <img :src="getMediaUrl(slide.image_media_id)" :alt="slide.title" loading="lazy" decoding="async">
                     <div v-if="index === currentIndex" class="carousel-caption">
                         <h3>{{ slide.title }}</h3>
                         <p>{{ slide.description }}</p>
                     </div>
                 </div>
                 <div class="carousel-indicator">
-                    <button v-for="(slide, index) in slides" :key="`${slide.image_url}-indicator`" type="button"
+                    <button v-for="(slide, index) in slides" :key="`${slide.id}-indicator`" type="button"
                         :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
                         @click="goToSlide(index)" />
                 </div>
@@ -133,10 +138,10 @@ onBeforeUnmount(stopAutoplay)
                         <span class="title">Groom</span>
                         <div class="hr_line"></div>
                         <div class="img-frame">
-                            <img :src="story.groom_image" alt="Groom image" loading="lazy" decoding="async">
+                            <img :src="getMediaUrl(groom?.image_media_id ?? 0)" alt="Groom image" loading="lazy" decoding="async">
                         </div>
                         <div>
-                            <a :href="story.groom_ig">
+                            <a :href="groom?.instagram_url">
                                 <button class="ig-btn">
                                     <font-awesome-icon :icon="['fab', 'instagram']" />
                                     {{ igGroomUsername }}
@@ -148,10 +153,10 @@ onBeforeUnmount(stopAutoplay)
                         <span class="title">Bride</span>
                         <div class="hr_line"></div>
                         <div class="img-frame">
-                            <img :src="story.bride_image" alt="Bride image" loading="lazy" decoding="async">
+                            <img :src="getMediaUrl(bride?.image_media_id ?? 0)" alt="Bride image" loading="lazy" decoding="async">
                         </div>
                         <div>
-                            <a :href="story.bride_ig">
+                            <a :href="bride?.instagram_url">
                                 <button class="ig-btn">
                                     <font-awesome-icon :icon="['fab', 'instagram']" />
                                     {{ igBrideUsername }}
