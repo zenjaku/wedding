@@ -1,73 +1,77 @@
-# .
+# wed-app (frontend)
 
-This template should help get you started developing with Vue 3 in Vite.
+Single-page wedding invitation site built with Vue 3 + Vite. The page is composed of sections (Hero, Love Story carousel, Wedding Schedule, Countdown + “Add to calendar”, RSVP, Footer) and is driven by the data in `src/props/DefaultValues.ts`.
 
-## Recommended IDE Setup
+## Requirements
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Node.js: `^20.19.0` or `>=22.12.0` (see `package.json`)
+- npm (ships with Node)
 
-## Recommended Browser Setup
+## Quickstart
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
+cd frontend
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+`npm run dev` starts Vite with `--open --host` (opens a browser and binds to your LAN IP).
 
-```sh
+## Scripts
+
+- `npm run dev` - start dev server
+- `npm run build` - type-check then build to `dist/`
+- `npm run preview` - serve the production build locally
+- `npm run test:unit` - run Vitest unit tests
+- `npm run test:e2e` - run Playwright e2e tests
+- `npm run lint` - run oxlint + eslint (auto-fixes where possible)
+- `npm run format` - run Prettier on `src/`
+
+## Customizing content
+
+Most content is static and lives in `src/props/DefaultValues.ts`:
+
+- `DEFAULT_WEDDING`
+  - `header`: hero kicker text (e.g. “The Wedding of”)
+  - `starts_at`: wedding start date/time (used by the hero date, countdown, schedule, and calendar actions)
+- `DEFAULT_PEOPLE`: groom/bride names, Instagram URLs, and their `image_media_id`
+- `DEFAULT_MEDIA_ASSETS`: image URLs used by the hero, profiles, carousel, and direction section
+- `DEFAULT_VENUES`: venue names + Google Maps URLs
+- `DEFAULT_WEDDING_EVENTS`: schedule entries
+  - `starts_at_offset_minutes` is relative to `DEFAULT_WEDDING.starts_at`
+- `DEFAULT_LOVESTORY` + `DEFAULT_CAROUSEL_SLIDES`: “Our Love Story” text and carousel items
+
+### Images (recommended)
+
+Right now the defaults point at remote image URLs. For reliability, put images in `frontend/public/` and reference them with absolute paths:
+
+- Example: add `frontend/public/images/hero.jpg`
+- Use `url: '/images/hero.jpg'` in `DEFAULT_MEDIA_ASSETS`
+
+## Enabling / disabling sections
+
+Sections are composed in `src/pages/HomePage.vue`.
+
+- The Direction section is currently commented out. Uncomment `<DirectionSection />` to show it.
+
+## RSVP form
+
+`src/pages/sections/RSVPSection.vue` is currently UI-only (no submit handler / backend integration). If you want RSVP submissions to go somewhere, add state + validation and post the payload to your backend (or integrate a hosted form service).
+
+## Deployment
+
+This frontend is a static build:
+
+```bash
+cd frontend
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Deploy the contents of `frontend/dist/` to any static host (Vercel, Netlify, GitHub Pages, S3/CloudFront, etc.). For a subpath deploy, set Vite’s `base` and note the router uses `import.meta.env.BASE_URL` (`src/router/index.ts`).
 
-```sh
-npm run test:unit
-```
+## Tests (note)
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+Vitest and Playwright are configured, but the existing sample tests still assert template text (`"You did it!"`) and will need updating to match the current UI:
 
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
-npm run build
-
-# Runs the end-to-end tests
-npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- Unit: `src/__tests__/App.spec.ts`
+- E2E: `e2e/vue.spec.ts`
