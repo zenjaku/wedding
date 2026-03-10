@@ -32,19 +32,31 @@ const eventDateFormatter = new Intl.DateTimeFormat('en-US', {
 
 <template>
     <section id="wedding-details">
-        <div class="wed-details">
-            <div class="details" v-for="(card, index) in eventCards" :key="card.event.id"
-                v-reveal :style="{ '--reveal-delay': `${index * 90}ms` }">
-                <span class="details-title">{{ card.event.label }}</span>
-                <hr>
-                <p>{{ card.venue.name }}</p>
-                <span class="details-time">{{ eventDateFormatter.format(getEventStartDate(card.event.starts_at_offset_minutes)) }}</span>
-                <a :href="card.venue.map_url">
-                    <button class="direction-btn">
-                        <font-awesome-icon :icon="['fas', 'location-dot']" />
-                        Google map
-                    </button>
-                </a>
+        <div class="wed-details" v-reveal>
+            <header class="wed-details-header" v-reveal="'fade-in'" style="--reveal-delay: 40ms">
+                <h2 class="wed-details-title">Wedding Schedule</h2>
+                <p class="wed-details-subtitle">Time, place, and directions for the day.</p>
+            </header>
+
+            <div class="wed-details-grid">
+                <article class="wed-details-card" v-for="(card, index) in eventCards" :key="card.event.id"
+                    v-reveal="'pop'" :style="{ '--reveal-delay': `${120 + (index * 90)}ms` }">
+                    <div class="wed-details-card__top">
+                        <span class="wed-details-label">{{ card.event.label }}</span>
+                        <span class="wed-details-time">{{ eventDateFormatter.format(getEventStartDate(card.event.starts_at_offset_minutes)) }}</span>
+                    </div>
+
+                    <div class="wed-details-venue">{{ card.venue.name }}</div>
+
+                    <div class="wed-details-actions">
+                        <a :href="card.venue.map_url" target="_blank" rel="noopener noreferrer">
+                            <button class="direction-btn" type="button">
+                                <font-awesome-icon :icon="['fas', 'location-dot']" />
+                                Google map
+                            </button>
+                        </a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>

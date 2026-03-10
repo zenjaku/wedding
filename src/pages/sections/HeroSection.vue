@@ -46,18 +46,25 @@ const formattedWeddingDate = new Intl.DateTimeFormat('en-US', {
 <template>
     <section id="hero">
         <div class="hero-container" v-reveal="'zoom'">
-            <div class="hero-title">
-                <div class="column">
-                    <span class="title">{{ wedding.header }}</span>
-                    <span class="header">{{ groom?.display_name ?? 'Groom' }} and {{ bride?.display_name ?? 'Bride' }}</span>
-                </div>
-                <div>
-                    <span class="details">{{ formattedWeddingDate }}</span>
+            <div class="hero-media" aria-hidden="true">
+                <img :src="heroImage?.url" :alt="wedding.header" class="hero-image" fetchpriority="high"
+                    decoding="async" />
+            </div>
+            <div class="hero-overlay" aria-hidden="true"></div>
+
+            <div class="hero-content">
+                <div class="hero-kicker">{{ wedding.header }}</div>
+                <h1 class="hero-names">
+                    <span class="hero-name">{{ groom?.display_name }}</span>
+                    <span class="hero-amp">&</span>
+                    <span class="hero-name">{{ bride?.display_name }}</span>
+                </h1>
+                <div class="hero-date">
+                    <span class="hero-date__label">When</span>
+                    <span class="hero-date__value">{{ formattedWeddingDate }}</span>
                 </div>
             </div>
-            <div class="img-container">
-                <img :src="heroImage?.url" :alt="wedding.header" class="image-fluid" fetchpriority="high" decoding="async" />
-            </div>
+
             <div v-if="showScrollHint" class="hero-scroll-hint" aria-hidden="true">
                 <font-awesome-icon :icon="['fas', 'chevron-up']" class="hero-scroll-hint__icon" />
                 <span class="hero-scroll-hint__text">Swipe up to explore</span>

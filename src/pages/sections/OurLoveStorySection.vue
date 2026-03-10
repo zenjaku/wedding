@@ -115,57 +115,67 @@ onBeforeUnmount(stopAutoplay)
             <img :src="getMediaUrl(8)" alt="" class="carousel-background-image" loading="lazy" decoding="async">
         </div>
         <div class="carousel-content" v-reveal>
-            <h2 v-reveal="'fade-in'" style="--reveal-delay: 40ms">Our Love Story</h2>
-            <div class="carousel-container" v-reveal="'pop'" style="--reveal-delay: 120ms"
-                @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
-                <div v-for="(slide, index) in slides" :key="slide.id" class="carousel-img-container"
-                    :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
-                    <img :src="getMediaUrl(slide.image_media_id)" :alt="slide.title" loading="lazy" decoding="async">
-                    <div v-if="index === currentIndex" class="carousel-caption">
-                        <h3>{{ slide.title }}</h3>
-                        <p>{{ slide.description }}</p>
+            <header class="love-header" v-reveal="'fade-in'" style="--reveal-delay: 40ms">
+                <h2>Our Love Story</h2>
+                <p class="love-subtitle">A few snapshots, and the people behind them.</p>
+            </header>
+
+            <div class="love-layout">
+                <div class="love-carousel" v-reveal="'pop'" style="--reveal-delay: 120ms">
+                    <div class="carousel-container" @touchstart.passive="handleTouchStart"
+                        @touchend.passive="handleTouchEnd">
+                        <div v-for="(slide, index) in slides" :key="slide.id" class="carousel-img-container"
+                            :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
+                            <img :src="getMediaUrl(slide.image_media_id)" :alt="slide.title" loading="lazy"
+                                decoding="async">
+                            <div v-if="index === currentIndex" class="carousel-caption">
+                                <h3>{{ slide.title }}</h3>
+                                <p>{{ slide.description }}</p>
+                            </div>
+                        </div>
+                        <div class="carousel-indicator">
+                            <button v-for="(slide, index) in slides" :key="`${slide.id}-indicator`" type="button"
+                                :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
+                                @click="goToSlide(index)" />
+                        </div>
                     </div>
                 </div>
-                <div class="carousel-indicator">
-                    <button v-for="(slide, index) in slides" :key="`${slide.id}-indicator`" type="button"
-                        :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
-                        @click="goToSlide(index)" />
-                </div>
-            </div>
-            <div class="our_love_story" v-reveal="'fade-in'" style="--reveal-delay: 200ms">
-                <p class="description">{{ story.description }}</p>
-                <div class="images">
-                    <div v-reveal :style="{ '--reveal-delay': '260ms' }">
-                        <span class="title">Groom</span>
-                        <div class="hr_line"></div>
-                        <div class="img-frame">
-                            <img :src="getMediaUrl(groom?.image_media_id ?? 0)" alt="Groom image" loading="lazy" decoding="async">
-                        </div>
-                        <div>
-                            <a :href="groom?.instagram_url">
-                                <button class="ig-btn">
+
+                <aside class="love-aside" v-reveal="'fade-in'" style="--reveal-delay: 200ms">
+                    <p class="love-description">{{ story.description }}</p>
+
+                    <div class="love-profiles">
+                        <article class="profile-card" v-reveal :style="{ '--reveal-delay': '260ms' }">
+                            <span class="profile-role">Groom</span>
+                            <div class="img-frame profile-photo">
+                                <img :src="getMediaUrl(groom?.image_media_id ?? 0)" alt="Groom image" loading="lazy"
+                                    decoding="async">
+                            </div>
+                            <a class="profile-link" :href="groom?.instagram_url" target="_blank"
+                                rel="noopener noreferrer">
+                                <button class="ig-btn" type="button">
                                     <font-awesome-icon :icon="['fab', 'instagram']" />
-                                    {{ igGroomUsername }}
+                                    {{ igGroomUsername || 'Instagram' }}
                                 </button>
                             </a>
-                        </div>
-                    </div>
-                    <div v-reveal :style="{ '--reveal-delay': '340ms' }">
-                        <span class="title">Bride</span>
-                        <div class="hr_line"></div>
-                        <div class="img-frame">
-                            <img :src="getMediaUrl(bride?.image_media_id ?? 0)" alt="Bride image" loading="lazy" decoding="async">
-                        </div>
-                        <div>
-                            <a :href="bride?.instagram_url">
-                                <button class="ig-btn">
+                        </article>
+
+                        <article class="profile-card" v-reveal :style="{ '--reveal-delay': '340ms' }">
+                            <span class="profile-role">Bride</span>
+                            <div class="img-frame profile-photo">
+                                <img :src="getMediaUrl(bride?.image_media_id ?? 0)" alt="Bride image" loading="lazy"
+                                    decoding="async">
+                            </div>
+                            <a class="profile-link" :href="bride?.instagram_url" target="_blank"
+                                rel="noopener noreferrer">
+                                <button class="ig-btn" type="button">
                                     <font-awesome-icon :icon="['fab', 'instagram']" />
-                                    {{ igBrideUsername }}
+                                    {{ igBrideUsername || 'Instagram' }}
                                 </button>
                             </a>
-                        </div>
+                        </article>
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
     </section>

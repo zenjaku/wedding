@@ -21,4 +21,11 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.directive('reveal', revealDirective)
 app.use(createPinia())
 app.use(router)
+
+router.isReady().then(() => {
+  if (!window.location.hash) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+})
+
 app.mount('#app')
