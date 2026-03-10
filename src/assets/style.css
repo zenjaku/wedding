@@ -16,6 +16,16 @@
     --regular-font-weight: 400;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -541,6 +551,48 @@ button {
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
     background-color: #f3f3f3;
+}
+
+.calendar-actions {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.calendar-actions-enter-active,
+.calendar-actions-leave-active {
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.calendar-actions-enter-from,
+.calendar-actions-leave-to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+}
+
+.calendar-actions-enter-to,
+.calendar-actions-leave-from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.calendar-action {
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.calendar-action:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Small devices (tablets, 600px and up) */

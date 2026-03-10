@@ -10,6 +10,10 @@ import './assets/style.css'
 
 library.add(faLocationDot, faInstagram)
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual'
+}
+
 const app = createApp(App)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
