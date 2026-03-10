@@ -33,7 +33,8 @@ const eventDateFormatter = new Intl.DateTimeFormat('en-US', {
 <template>
     <section id="wedding-details">
         <div class="wed-details">
-            <div class="details" v-for="card in eventCards" :key="card.event.id">
+            <div class="details" v-for="(card, index) in eventCards" :key="card.event.id"
+                v-reveal :style="{ '--reveal-delay': `${index * 90}ms` }">
                 <span class="details-title">{{ card.event.label }}</span>
                 <hr>
                 <p>{{ card.venue.name }}</p>

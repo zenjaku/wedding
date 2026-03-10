@@ -129,12 +129,12 @@ onBeforeUnmount(() => {
 
 <template>
     <section id="countdown">
-        <div class="countdown-container">
+        <div class="countdown-container" v-reveal>
             <div class="background-image-container">
                 <img src="https://images.pexels.com/photos/1503520/pexels-photo-1503520.jpeg" alt=""
                     class="background-image">
             </div>
-            <div class="countdown">
+            <div class="countdown" v-reveal="'fade-in'" style="--reveal-delay: 60ms">
                 <div class="countdown-title">
                     COUNTDOWN
                 </div>
@@ -143,19 +143,19 @@ onBeforeUnmount(() => {
                     We look forward to welcoming our family and friends to witness our blessed vows on this happy day.
                 </span>
                 <div class="date-in-blocks">
-                    <div class="days">
+                    <div class="days" v-reveal :style="{ '--reveal-delay': '140ms' }">
                         <span class="title">{{ countdown.days }}</span>
                         <span class="item">Days</span>
                     </div>
-                    <div class="hours">
+                    <div class="hours" v-reveal :style="{ '--reveal-delay': '220ms' }">
                         <span class="title">{{ countdown.hours }}</span>
                         <span class="item">Hours</span>
                     </div>
-                    <div class="minutes">
+                    <div class="minutes" v-reveal :style="{ '--reveal-delay': '300ms' }">
                         <span class="title">{{ countdown.minutes }}</span>
                         <span class="item">Minutes</span>
                     </div>
-                    <div class="seconds">
+                    <div class="seconds" v-reveal :style="{ '--reveal-delay': '380ms' }">
                         <span class="title">{{ countdown.seconds }}</span>
                         <span class="item">Seconds</span>
                     </div>

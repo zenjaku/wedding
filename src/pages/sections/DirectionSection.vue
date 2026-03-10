@@ -13,8 +13,8 @@ function getSlideImageUrl(imageMediaId: number) {
 
 <template>
     <section id="direction">
-        <div class="direction">
-            <div class="direction-img-container">
+        <div class="direction" v-reveal>
+            <div class="direction-img-container" v-reveal="'fade-in'" style="--reveal-delay: 60ms">
                 <img :src="directionImage?.url" :alt="direction.label" loading="lazy" decoding="async">
                 <p class="direction-title">{{ venue?.name ?? direction.label }}</p>
                 <a :href="venue?.map_url" target="_blank" rel="noopener noreferrer">
@@ -25,7 +25,8 @@ function getSlideImageUrl(imageMediaId: number) {
                 </a>
             </div>
             <div v-for="(slide, index) in slides" :key="slide.id"
-                :class="['side-image-container', index === 0 ? 'left' : 'right']">
+                :class="['side-image-container', index === 0 ? 'left' : 'right']"
+                v-reveal="'pop'" :style="{ '--reveal-delay': `${120 + (index * 90)}ms` }">
                 <img :src="getSlideImageUrl(slide.image_media_id)" :alt="slide.title" loading="lazy" decoding="async">
             </div>
         </div>

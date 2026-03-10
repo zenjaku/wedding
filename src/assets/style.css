@@ -7,6 +7,7 @@
     --primary-color: #ffffff;
     --secondary-color: #bcbcbc;
     --tertiary-color: #4f4f4f;
+    --section-pad: clamp(0.75rem, 3vw, 2.25rem);
     --hero-font-size: clamp(3rem, 12vw, 8rem);
     --header-font-size: clamp(2rem, 4.4vw, 6rem);
     --title-font-size: clamp(1.05rem, 4.4vw, 2.75rem);
@@ -18,11 +19,53 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
 }
 
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+        scroll-snap-type: none;
+    }
+}
+
+/* Scroll reveal animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(2px);
+    transition: opacity 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform, filter;
+}
+
+.reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.reveal--fade-in {
+    transform: none;
+    filter: none;
+}
+
+.reveal--zoom {
+    transform: translateY(10px) scale(0.985);
+}
+
+.reveal--pop {
+    transform: translateY(10px) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
     }
 }
 
@@ -38,6 +81,26 @@ body {
     background-color: var(--primary-color);
 }
 
+/* Full-screen snap sections (stacked panels) */
+#hero,
+#carousel,
+#direction,
+#wedding-details,
+#countdown {
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* Make the primary content in each section fill the viewport minus padding */
+#hero .hero-container,
+#carousel .carousel-content,
+#direction .direction,
+#wedding-details .wed-details,
+#countdown .countdown-container {
+    min-height: calc(100svh - (var(--section-pad) * 2));
+}
+
 button {
     background-color: transparent;
     border: none;
@@ -46,13 +109,92 @@ button {
 
 /* Hero Section */
 #hero {
-    padding: clamp(0.75rem, 3vw, 2.25rem);
+    /* padding: var(--section-pad); */
+    display: flex;
 }
 
 .hero-container {
+    flex: 1;
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    min-height: calc(100svh - (var(--section-pad) * 2));
+    /* border-radius: clamp(1rem, 4vw, 3.75rem); */
+}
+
+.hero-scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(3.75rem, 6vw, 6rem);
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 0 10px 26px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    user-select: none;
+    animation: heroHintFadeIn 500ms ease 180ms both;
+    width: 70%;
+}
+
+.hero-scroll-hint__icon {
+    font-size: 1.4rem;
+    animation: heroHintPulse 1.15s ease-in-out infinite;
+}
+
+.hero-scroll-hint__text {
+    font-family: var(--secondary-font);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+}
+
+@keyframes heroHintPulse {
+    0% {
+        transform: translateY(0);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 0.85;
+    }
+}
+
+@keyframes heroHintFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-scroll-hint {
+        animation: none;
+    }
+
+    .hero-scroll-hint__icon {
+        animation: none;
+    }
 }
 
 .hero-title {
@@ -83,7 +225,8 @@ button {
 
 .hero-title .details {
     font-family: var(--secondary-font);
-    font-size: var(--paragraph-font-size);
+    font-size: 1em;
+    font-style: italic;
     color: var(--primary-color);
     text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
@@ -99,25 +242,27 @@ button {
     width: 100%;
     position: relative;
     z-index: 1;
+    height: 100%;
 }
 
 .image-fluid {
     width: 100%;
-    height: clamp(22rem, 62svh, 44rem);
+    height: 100%;
     object-fit: cover;
     display: block;
-    border-radius: clamp(1rem, 4vw, 3.75rem);
     pointer-events: none;
     user-select: none;
 }
 
 /* CAROUSEL SECTION */
 #carousel {
-    padding: clamp(0.75rem, 3vw, 2.25rem);
-    min-height: 80svh;
+    padding: var(--section-pad);
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-background {
@@ -145,6 +290,10 @@ button {
 .carousel-content {
     position: relative;
     z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #carousel h2 {
@@ -313,13 +462,16 @@ button {
 
 /* DIRECTION SECTION */
 #direction {
-    margin-top: 1.25em;
-    padding: 0 clamp(0.5rem, 3vw, 1.5rem) 1.5rem;
+    padding: var(--section-pad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .direction {
+    width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     gap: clamp(0.5rem, 2.2vw, 1rem);
 }
@@ -399,7 +551,10 @@ button {
 }
 
 #wedding-details {
-    margin-top: 1.25em;
+    padding: var(--section-pad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wed-details {
@@ -407,6 +562,8 @@ button {
     flex-direction: column;
     width: 100%;
     gap: 2em;
+    max-width: 44rem;
+    justify-content: center;
 }
 
 .wed-details .details {
@@ -444,8 +601,10 @@ button {
 
 /* COUNTDOWN SECTION */
 #countdown {
-    margin-top: 1.25em;
-    padding: 0 clamp(0.75rem, 3vw, 2rem) 2rem;
+    padding: var(--section-pad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .countdown-container {
@@ -453,12 +612,12 @@ button {
     isolation: isolate;
     overflow: hidden;
     border-radius: 1.5rem;
-    min-height: 22rem;
     padding: clamp(2rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #242323;
+    width: min(100%, 56rem);
 }
 
 .background-image-container {

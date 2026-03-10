@@ -114,9 +114,10 @@ onBeforeUnmount(stopAutoplay)
         <div class="carousel-background">
             <img :src="getMediaUrl(8)" alt="" class="carousel-background-image" loading="lazy" decoding="async">
         </div>
-        <div class="carousel-content">
-            <h2>Our Love Story</h2>
-            <div class="carousel-container" @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
+        <div class="carousel-content" v-reveal>
+            <h2 v-reveal="'fade-in'" style="--reveal-delay: 40ms">Our Love Story</h2>
+            <div class="carousel-container" v-reveal="'pop'" style="--reveal-delay: 120ms"
+                @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
                 <div v-for="(slide, index) in slides" :key="slide.id" class="carousel-img-container"
                     :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
                     <img :src="getMediaUrl(slide.image_media_id)" :alt="slide.title" loading="lazy" decoding="async">
@@ -131,10 +132,10 @@ onBeforeUnmount(stopAutoplay)
                         @click="goToSlide(index)" />
                 </div>
             </div>
-            <div class="our_love_story">
+            <div class="our_love_story" v-reveal="'fade-in'" style="--reveal-delay: 200ms">
                 <p class="description">{{ story.description }}</p>
                 <div class="images">
-                    <div>
+                    <div v-reveal :style="{ '--reveal-delay': '260ms' }">
                         <span class="title">Groom</span>
                         <div class="hr_line"></div>
                         <div class="img-frame">
@@ -149,7 +150,7 @@ onBeforeUnmount(stopAutoplay)
                             </a>
                         </div>
                     </div>
-                    <div>
+                    <div v-reveal :style="{ '--reveal-delay': '340ms' }">
                         <span class="title">Bride</span>
                         <div class="hr_line"></div>
                         <div class="img-frame">
