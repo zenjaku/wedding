@@ -1,4 +1,10 @@
-import type { Direction, HeroDetails, ImageCarousel, LoveStory } from '@/types/types'
+import type {
+  Direction,
+  HeroDetails,
+  ImageCarousel,
+  LoveStory,
+  WeddingDetails,
+} from '@/types/types'
 
 export const DEFAULT_VALUES: [HeroDetails, ...HeroDetails[]] = [
   {
@@ -6,7 +12,7 @@ export const DEFAULT_VALUES: [HeroDetails, ...HeroDetails[]] = [
     header: 'The Wedding of',
     groom_name: 'Groom',
     bride_name: 'Bride',
-    wedding_date: new Date('2026-03-06T09:00:00'),
+    wedding_date: new Date('2026-05-28T09:00:00'),
     image_url: 'https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg',
   },
 ]
@@ -50,5 +56,22 @@ export const DEFAULT_DIRECTION: [Direction, ...Direction[]] = [
     title: 'RTC-Malolos',
     google_map: 'https://maps.app.goo.gl/W2QpeUSQMkVZB1nF7',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Rtcmalolosjf.JPG',
+  },
+]
+
+export const DEFAULT_WEDDING_DETAILS: [WeddingDetails, ...WeddingDetails[]] = [
+  {
+    id: 1,
+    title: 'Wedding Details',
+    name: 'RTC - Malolos Bulacan',
+    location: 'https://maps.app.goo.gl/W2QpeUSQMkVZB1nF7',
+    date: new Date('2026-03-06T09:00:00'),
+  },
+  {
+    id: 2,
+    title: 'Reception Details',
+    name: 'All you can eat buffet restaurant',
+    location: 'https://maps.app.goo.gl/W2QpeUSQMkVZB1nF7',
+    date: new Date('2026-03-06T09:00:00'),
   },
 ]

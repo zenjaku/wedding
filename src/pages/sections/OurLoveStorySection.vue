@@ -105,53 +105,59 @@ onBeforeUnmount(stopAutoplay)
 
 <template>
     <section id="carousel">
-        <h2>Our Love Story</h2>
-        <div class="carousel-container" @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
-            <div v-for="(slide, index) in slides" :key="slide.image_url" class="carousel-img-container"
-                :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
-                <img :src="slide.image_url" :alt="slide.title" loading="lazy" decoding="async">
-                <div v-if="index === currentIndex" class="carousel-caption">
-                    <h3>{{ slide.title }}</h3>
-                    <p>{{ slide.description }}</p>
-                </div>
-            </div>
-            <div class="carousel-indicator">
-                <button v-for="(slide, index) in slides" :key="`${slide.image_url}-indicator`" type="button"
-                    :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
-                    @click="goToSlide(index)" />
-            </div>
+        <div class="carousel-background">
+            <img src="https://images.pexels.com/photos/230290/pexels-photo-230290.jpeg" alt=""
+                class="carousel-background-image" loading="lazy" decoding="async">
         </div>
-        <div class="our_love_story">
-            <p class="description">{{ story.description }}</p>
-            <div class="images">
-                <div>
-                    <span class="title">Groom</span>
-                    <div class="hr_line"></div>
-                    <div class="img-frame">
-                        <img :src="story.groom_image" alt="Groom image" loading="lazy" decoding="async">
-                    </div>
-                    <div>
-                        <a :href="story.groom_ig">
-                            <button class="ig-btn">
-                                <font-awesome-icon :icon="['fab', 'instagram']" />
-                                {{ igGroomUsername }}
-                            </button>
-                        </a>
+        <div class="carousel-content">
+            <h2>Our Love Story</h2>
+            <div class="carousel-container" @touchstart.passive="handleTouchStart" @touchend.passive="handleTouchEnd">
+                <div v-for="(slide, index) in slides" :key="slide.image_url" class="carousel-img-container"
+                    :class="{ active: index === currentIndex }" :style="getSlideStyle(index)">
+                    <img :src="slide.image_url" :alt="slide.title" loading="lazy" decoding="async">
+                    <div v-if="index === currentIndex" class="carousel-caption">
+                        <h3>{{ slide.title }}</h3>
+                        <p>{{ slide.description }}</p>
                     </div>
                 </div>
-                <div>
-                    <span class="title">Bride</span>
-                    <div class="hr_line"></div>
-                    <div class="img-frame">
-                        <img :src="story.bride_image" alt="Bride image" loading="lazy" decoding="async">
+                <div class="carousel-indicator">
+                    <button v-for="(slide, index) in slides" :key="`${slide.image_url}-indicator`" type="button"
+                        :aria-label="`Go to slide ${index + 1}`" :class="{ active: index === currentIndex }"
+                        @click="goToSlide(index)" />
+                </div>
+            </div>
+            <div class="our_love_story">
+                <p class="description">{{ story.description }}</p>
+                <div class="images">
+                    <div>
+                        <span class="title">Groom</span>
+                        <div class="hr_line"></div>
+                        <div class="img-frame">
+                            <img :src="story.groom_image" alt="Groom image" loading="lazy" decoding="async">
+                        </div>
+                        <div>
+                            <a :href="story.groom_ig">
+                                <button class="ig-btn">
+                                    <font-awesome-icon :icon="['fab', 'instagram']" />
+                                    {{ igGroomUsername }}
+                                </button>
+                            </a>
+                        </div>
                     </div>
                     <div>
-                        <a :href="story.bride_ig">
-                            <button class="ig-btn">
-                                <font-awesome-icon :icon="['fab', 'instagram']" />
-                                {{ igBrideUsername }}
-                            </button>
-                        </a>
+                        <span class="title">Bride</span>
+                        <div class="hr_line"></div>
+                        <div class="img-frame">
+                            <img :src="story.bride_image" alt="Bride image" loading="lazy" decoding="async">
+                        </div>
+                        <div>
+                            <a :href="story.bride_ig">
+                                <button class="ig-btn">
+                                    <font-awesome-icon :icon="['fab', 'instagram']" />
+                                    {{ igBrideUsername }}
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

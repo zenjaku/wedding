@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import DirectionSection from '@/components/DirectionSection.vue';
-import HeroSection from '@/components/HeroSection.vue';
-import OurLoveStorySection from '@/components/OurLoveStorySection.vue';
+import HeroSection from '@/pages/sections/HeroSection.vue';
+import OurLoveStorySection from '@/pages/sections/OurLoveStorySection.vue';
+import WeddingDetailsSection from './sections/WeddingDetailsSection.vue';
+import CountdownSection from './sections/CountdownSection.vue';
 </script>
 
 <template>
     <HeroSection />
     <OurLoveStorySection />
-    <DirectionSection />
+    <!-- <DirectionSection /> -->
+    <WeddingDetailsSection />
+    <CountdownSection />
 </template>

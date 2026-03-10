@@ -30,3 +30,11 @@ export type Direction = {
   google_map: string
   image_url: string
 }
+
+export type WeddingDetails = {
+  id: number
+  title: string
+  name: string
+  location: string
+  date: Date
+}
